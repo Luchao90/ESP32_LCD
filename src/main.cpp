@@ -38,6 +38,7 @@
 
 #include <Arduino.h>
 #include <U8g2lib.h>
+#include "image.h"
 
 #ifdef U8X8_HAVE_HW_SPI
 #include <SPI.h>
@@ -71,15 +72,12 @@ U8G2_ST7920_128X64_F_HW_SPI u8g2(U8G2_R0,/* CS=*/ STP7920_CS_PIN, /* reset=*/ ST
 void setup(void)
 {
     u8g2.begin();
-    u8g2.setFont(u8g2_font_osb21_tf);
 }
 
 void loop()
 {
-    u8g2.firstPage();
-    do
-    {
-        u8g2.drawStr(14, 40, "Novotec");
-        delay(30);
-    } while (u8g2.nextPage());
+    u8g2.clearBuffer();
+    u8g2.drawXBMP( 10, 0, novotec2_width, novotec2_height, novotec2_bits);
+    u8g2.sendBuffer();
+    delay(30);
 }
